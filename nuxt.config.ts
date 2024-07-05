@@ -40,13 +40,22 @@ export default defineNuxtConfig({
           additionalData: '@import "@/assets/mixins/variables.scss";'
         }
       }
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://1.94.60.254:9003',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '')
+        }
+      }
     }
   },
   pinia: {
     storesDirs: ['./app/stores']
   },
   natlk: {
-    baseURL: '/api',
+    baseURL: process.env.BASE_URL || '/',
     pages: {
       login: '/',
       unauthorized: '/401'
