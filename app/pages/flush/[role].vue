@@ -1,0 +1,11 @@
+<template>
+  <div>123</div>
+</template>
+
+<script lang="ts" setup>
+definePageMeta({
+  auth: 'guest'
+})
+</script>
+
+<style lang="scss" scoped></style>
