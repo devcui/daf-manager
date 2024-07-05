@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
   devtools: { enabled: true },
-  extends: ['@nuxt/ui-pro'],
+  extends: [],
   modules: [
     'nuxt-auth-toolkit',
     '@nuxt/ui',
@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   natlk: {
     baseURL: '/api',
     pages: {
+      login: '/',
       unauthorized: '/401'
     },
     accessToken: {
