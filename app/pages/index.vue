@@ -24,17 +24,26 @@
           :state="state"
           @submit="onSubmit"
         >
-          <UFormGroup
-            label="账号/QQ号"
-            name="account"
-            eager-validation
-          >
-            <UInput
-              v-model="state.account"
-              placeholder="请输入账号/QQ号"
-              @keydown.enter="onAccountEnter"
-            />
-          </UFormGroup>
+          <div class="flex items-center mb-4">
+            <UFormGroup
+              label="账号/QQ号"
+              name="account"
+              eager-validation
+              class="flex-1"
+            >
+              <UInput
+                v-model="state.account"
+                placeholder="请输入账号/QQ号"
+                @keydown.enter="onAccountEnter"
+              />
+            </UFormGroup>
+            <UButton
+              class="ml-2"
+              @click="onAccountEnter"
+            >
+              获取角色
+            </UButton>
+          </div>
           <UFormGroup
             label="角色"
             name="role"
@@ -47,7 +56,6 @@
               option-attribute="name"
             />
           </UFormGroup>
-
           <UButton type="submit">
             下一步
           </UButton>
@@ -111,6 +119,10 @@ const state = reactive({
 
 // account enter
 const onAccountEnter = async () => {
+  if (!state.account) {
+    error.value = '请输入账号/QQ号'
+    return
+  }
   const { data } = await useFetch<Page<Role>>(`/api/characInfo?pageNum=1&pageSize=100&accountName=${state.account}`, {
     method: 'get',
     auth: false
