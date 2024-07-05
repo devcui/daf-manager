@@ -4,7 +4,7 @@
     <Tools @on-add="onToolsAdd" />
     <Editor
       :emails="emails"
-      @edit="onEditEmail"
+      @on-edit="onEditEmail"
     />
   </div>
 </template>
@@ -23,6 +23,7 @@ const emails = ref<Email[]>([])
 
 const onEquitmentAdd = (item: Equipment) => {
   emails.value.push({
+    name: item.name,
     receiveCharacNo: role,
     itemId: item.id,
     addInfo: 1
@@ -30,13 +31,15 @@ const onEquitmentAdd = (item: Equipment) => {
 }
 const onToolsAdd = (item: Tools) => {
   emails.value.push({
+    name: item.name,
     receiveCharacNo: role,
     itemId: item.id,
     addInfo: 1
   })
 }
 const onEditEmail = (e: Email[]) => {
-  emails.value = [...e]
+  console.log(e)
+  emails.value = e
 }
 
 const sendEmail = async () => {

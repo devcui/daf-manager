@@ -41,8 +41,9 @@ export interface Email {
   sealFlag?: boolean
   // 物品锻造等级
   seperateUpgrade?: number
+  name?: string
+  index?: number
 }
-
 export interface EuipmentQuery {
   keyword: string
   pageNum: number
