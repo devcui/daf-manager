@@ -6,14 +6,14 @@
     >
       <template #actions-data="{ row, index }">
         <UButton
-          color="gray"
+          color="orange"
           variant="ghost"
           @click="update(index, row)"
         >
           修改
         </UButton>
         <UButton
-          color="gray"
+          color="orange"
           variant="ghost"
           @click="remove(index)"
         >

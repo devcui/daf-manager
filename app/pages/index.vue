@@ -37,6 +37,19 @@
                 @keydown.enter="onAccountEnter"
               />
             </UFormGroup>
+            <UFormGroup
+                label="密码"
+                name="passwd"
+                eager-validation
+                class="flex-1"
+            >
+              <UInput
+                  v-model="state.passwd"
+                  placeholder="请输入密码"
+                  type="password"
+                  @keydown.enter="onAccountEnter"
+              />
+            </UFormGroup>
             <UButton
               class="ml-2"
               @click="onAccountEnter"
@@ -93,6 +106,7 @@
 <script setup lang="ts">
 import { z } from 'zod'
 import type { Page, Role } from '~/types'
+import md5 from 'js-md5'
 
 definePageMeta({
   auth: 'guest'
@@ -113,20 +127,25 @@ const schema = z.object({
 })
 const state = reactive({
   account: undefined,
+  passwd:undefined,
   role: undefined,
   roles: []
 })
 
 // account enter
 const onAccountEnter = async () => {
-  if (!state.account) {
-    error.value = '请输入账号/QQ号'
+  if (!state.account||!state.passwd) {
+    error.value = '请输入账号/密码'
     return
   }
-  const { data } = await useFetch<Page<Role>>(`/api/characInfo?pageNum=1&pageSize=100&accountName=${state.account}`, {
+  const { data } = await useFetch<Page<Role>>(`/api/characInfo?pageNum=1&pageSize=100&passwd=${md5(state.passwd)}&accountName=${state.account}`, {
     method: 'get',
     auth: false
   })
+  if (data.value.records.length==0){
+    error.value = '账号/密码错误！'
+    return
+  }
   const records = data.value.records
   state.roles = records.map((record) => {
     return { name: record.characName, value: record.characNo }
@@ -180,7 +199,7 @@ onMounted(() => {
 }
 
 .bg-black-gray {
-  background-color: #2e2e2e;
+  background-color: azure;
 }
 .bg-img {
   background-image: url('@/public/background.webp');

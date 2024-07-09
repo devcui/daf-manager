@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex px-3 py-3.5 border-b">
       <UInput
         v-model="keyword"
         @keydown.enter="onSearch"
@@ -13,7 +13,7 @@
     >
       <template #actions-data="{ row }">
         <UButton
-          color="gray"
+          color="orange"
           variant="ghost"
           @click="add(row)"
         >
@@ -21,7 +21,7 @@
         </UButton>
       </template>
     </UTable>
-    <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex justify-end px-3 py-3.5">
       <UPagination
         v-model="pageNum"
         :page-count="pageSize"

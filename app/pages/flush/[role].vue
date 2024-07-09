@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen relative back">
     <UNotifications />
-    <div class="absolute inset-0 bg-gray-800 opacity-90" />
+    <div class="absolute inset-0 bg-red-50 opacity-90" />
     <div class="absolute inset-0 flex justify-center items-center">
       <div class="bg-cover bg-center back-image">
         <div class="flex flex-col h-full">
@@ -69,25 +69,34 @@ const onEditEmail = (e: Email[]) => {
 
 const sendEmail = async () => {
   loading.value = true
-  for (let index = 0; index < emails.value.length; index++) {
-    const email = emails.value[index]
+  if(emails.value.length === 0) {
+    toast.add({
+      title: '你还没选发什么',
+      description: '你还没选发什么？'
+    })
+    loading.value = false
+  }else {
+    for (let index = 0; index < emails.value.length; index++) {
+      const email = emails.value[index]
+      toast.add({
+        title: '发送邮件',
+        description: `正在发送第${index + 1}-${email.name}封邮件`
+      })
+      await useFetch('/api/postal', {
+        auth: false,
+        method: 'POST',
+        body: {
+          ...email
+        }
+      })
+    }
     toast.add({
       title: '发送邮件',
-      description: `正在发送第${index + 1}-${email.name}封邮件`
+      description: '邮件发送完毕'
     })
-    await useFetch('/api/postal', {
-      auth: false,
-      method: 'POST',
-      body: {
-        ...email
-      }
-    })
+    loading.value = false
   }
-  toast.add({
-    title: '发送邮件',
-    description: '邮件发送完毕'
-  })
-  loading.value = false
+
 }
 </script>
 

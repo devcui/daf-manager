@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   experimental: {
-    appManifest: false
+    appManifest: false,
+    payloadExtraction: false
   },
   ssr: true,
   devtools: { enabled: true },
@@ -44,7 +45,7 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': {
-          target: 'http://1.94.60.254:9003',
+          target: 'http://localhost:9003',
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, '')
         }
